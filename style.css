@@ -912,7 +912,42 @@ html {
   }
 }
 
+/* --- Desktop & Laptop Alignment Fixes --- */
+@media (min-width: 769px) {
+  .top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .right-cluster,
+  .app-brand {
+    pointer-events: auto;
+  }
+
+  .right-cluster {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .app-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
 /* --- Unified Glass Morphism --- */
+
 .icon-btn,
 #search-toggle,
 #inventory-toggle,
