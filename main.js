@@ -455,3 +455,18 @@ function updateSidebar() {
     routeList.appendChild(item);
   });
 }
+
+// Mobile Compass Rotation
+if (window.DeviceOrientationEvent && compassContainer) {
+  window.addEventListener("deviceorientation", (event) => {
+    let alpha = event.alpha;
+    // iOS support
+    if (event.webkitCompassHeading) {
+      alpha = event.webkitCompassHeading;
+    }
+    if (alpha !== null) {
+      // Rotate Compass Ring (Counter-rotate alpha)
+      compassContainer.style.transform = `translate(-50%, -50%) rotate(${-alpha}deg)`;
+    }
+  }, true);
+}
