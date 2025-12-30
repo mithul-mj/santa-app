@@ -788,10 +788,13 @@ html {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 1rem;
-    padding-top: 4rem; /* More space at top */
-    padding-bottom: 4rem; /* Ensure button isn't stuck to bottom */
+    padding-top: 4rem;
+    /* More space at top */
+    padding-bottom: 4rem;
+    /* Ensure button isn't stuck to bottom */
     height: auto;
-    min-height: 100svh; /* Use svh for mobile browsers */
+    min-height: 100svh;
+    /* Use svh for mobile browsers */
   }
 
   .hero-text {
@@ -800,11 +803,13 @@ html {
   }
 
   .landing-title {
-    font-size: 2.8rem; /* Smaller font on mobile */
+    font-size: 2.8rem;
+    /* Smaller font on mobile */
   }
 
   .hero-visual {
-    height: 300px; /* Slightly smaller */
+    height: 300px;
+    /* Slightly smaller */
     order: 1;
     margin-bottom: 0;
   }
@@ -813,7 +818,7 @@ html {
     width: 280px;
     height: 280px;
   }
-  
+
   .orbit-ring {
     width: 350px;
     height: 350px;
@@ -879,18 +884,60 @@ html {
   .right-cluster {
     gap: 5px;
   }
+}
 
-  .icon-btn,
-  #search-toggle,
-  #inventory-toggle {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
+/* --- Mobile Modals & Wheel --- */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+    max-height: 85vh;
+    /* Prevent modal from being taller than screen */
+    display: flex;
+    flex-direction: column;
   }
 
-  .weather-widget {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+  /* Fix Wheel Sizing */
+  .wheel-container {
+    width: 260px;
+    height: 260px;
+    margin: 1rem auto;
+  }
+
+  .wheel-marker {
+    font-size: 1.5rem;
+    top: -5px;
+  }
+
+  .spin-result {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Fix Inventory Layout */
+  .inventory-content {
+    padding: 1rem;
+  }
+
+  .add-item-form {
+    flex-direction: column;
+    /* Stack input and button */
+    gap: 8px;
+  }
+
+  .add-item-form input#new-item-count {
+    width: 100%;
+    /* Full width for count on mobile */
+  }
+
+  #add-item-btn {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .inventory-list {
+    max-height: 40vh;
+    /* Allow list to scroll independently */
   }
 
   .bottom-control {
