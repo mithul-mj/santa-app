@@ -443,15 +443,20 @@ function updateDistanceStatus() {
     return;
   }
   const target = activeRoute[nextIdx];
-  let fromLoc = (nextIdx === 0) ? map.getCenter() : activeRoute[nextIdx - 1].centroid;
-  const dist = fromLoc.distanceTo(target.centroid).toFixed(0);
+
+  // Calculate distance from current User Location (Result in Meters)
+  const fromLoc = map.getCenter();
+  const distMeters = fromLoc.distanceTo(target.centroid);
+
+  // Convert to KM
+  const distKm = (distMeters / 1000).toFixed(2);
 
   // Update Persistent HUD
   if (distanceHud && hudValue) {
     distanceHud.classList.remove('hidden');
-    hudValue.textContent = `${dist}m`;
+    hudValue.textContent = `${distKm} km`;
   } else {
-    showStatus(`NEXT: House #${nextIdx + 1} — RANGE: ${dist}m`);
+    showStatus(`NEXT: House #${nextIdx + 1} — RANGE: ${distKm} km`);
   }
 }
 
