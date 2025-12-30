@@ -263,12 +263,19 @@ closeSidebarBtn.addEventListener('click', () => routeSidebar.classList.add('hidd
 window.gpsHeading = null;
 
 /* --- Locate Me Logic --- */
+let userMarker = null;
+let userAccuracyCircle = null;
+let followUser = true;
+
+// Stop auto-centering if user interacts
+map.on('dragstart', () => { followUser = false; });
+
 if (locateBtn) {
   locateBtn.addEventListener('click', () => {
+    followUser = true;
     showStatus("Acquiring Satellite Fix...");
-    // Increased Timeout to 60s
     map.locate({
-      setView: true,
+      setView: false, // We handle view manually to allow panning
       maxZoom: 18,
       watch: true,
       enableHighAccuracy: true,
@@ -278,21 +285,28 @@ if (locateBtn) {
 }
 
 map.on('locationfound', (e) => {
-  const radius = e.accuracy;
+  // 1. Cleanup old location markers (Prevent "Many Circles")
+  if (userMarker) map.removeLayer(userMarker);
+  if (userAccuracyCircle) map.removeLayer(userAccuracyCircle);
 
-  // GPS Heading Fusion (Google Maps Style)
-  // If moving (>0.5m/s) and we have a heading, use it over the compass.
+  // 2. Add new markers (Directly to map, not game layer)
+  userAccuracyCircle = L.circle(e.latlng, e.accuracy, { color: '#0084B0', fillOpacity: 0.1, weight: 1 }).addTo(map);
+  userMarker = L.circleMarker(e.latlng, { radius: 6, color: 'white', fillColor: '#0084B0', fillOpacity: 1 }).addTo(map);
+
+  // 3. Smart Centering (Only if following)
+  if (followUser) {
+    map.panTo(e.latlng);
+  }
+
+  // 4. GPS Heading Fusion
   if (e.speed > 0.5 && e.heading !== null && !isNaN(e.heading)) {
     window.gpsHeading = e.heading;
     if (compassContainer) compassContainer.style.transform = `translate(-50%, -50%) rotate(${-e.heading}deg)`;
-    // Optional: Rotate a user marker arrow here
   } else {
-    window.gpsHeading = null; // Revert to Magnetometer when stopped
+    window.gpsHeading = null;
   }
 
-  L.circle(e.latlng, radius, { color: '#0084B0', fillOpacity: 0.1, weight: 1 }).addTo(currentLayerGroup);
-  L.circleMarker(e.latlng, { radius: 6, color: 'white', fillColor: '#0084B0', fillOpacity: 1 }).addTo(currentLayerGroup);
-  showStatus(`Pos Fixed. Acc: ${radius.toFixed(0)}m`);
+  showStatus(`Pos Fixed. Acc: ${e.accuracy.toFixed(0)}m`);
   updateWeather();
 });
 map.on('locationerror', (e) => showStatus(`GPS Error: ${e.message}`, true));
