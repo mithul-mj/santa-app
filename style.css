@@ -1158,25 +1158,6 @@ html {
     justify-content: flex-end;
   }
 
-  /* Corner Controls (Mobile) */
-  #locate-btn {
-    position: absolute !important;
-    bottom: 30px;
-    right: 20px;
-    width: 54px;
-    height: 54px;
-    background: rgba(13, 12, 20, 0.8) !important;
-    border-radius: 50%;
-    z-index: 500;
-  }
-
-  #sidebar-toggle {
-    position: absolute !important;
-    bottom: 30px;
-    left: 20px;
-    background: rgba(13, 12, 20, 0.8) !important;
-    z-index: 500;
-  }
 
   .icon-btn,
   #search-toggle,
