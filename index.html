@@ -50,46 +50,75 @@
     <!-- New Tutorial Section -->
     <section class="tutorial-section">
       <h2 class="section-title">MISSION PROTOCOL</h2>
-      <div class="tutorial-grid">
+
+      <div class="mission-steps-container">
+
         <!-- Step 1: Flight Path -->
-        <div class="tutorial-card">
-          <div class="step-badge">1</div>
-          <div class="screenshot-frame">
-            <img src="./assets/flightPath.jpeg" alt="Flight Path" class="app-screenshot">
+        <div class="mission-step">
+          <div class="step-text">
+            <div class="step-watermark">01</div>
+            <h3>FLIGHT PATH</h3>
+            <p>Analyze high-altitude trajectories to identify delivery zones using the onboard LIDAR satellite
+              connection.</p>
           </div>
-          <h3>FLIGHT PATH</h3>
-          <p>Analyze high-altitude trajectories to identify delivery zones.</p>
+          <div class="step-visual-container">
+            <div class="phone-3d-wrapper">
+              <div class="phone-notch"></div>
+              <img src="./assets/flightPath.jpeg" alt="Flight Path" class="screen-content">
+            </div>
+          </div>
         </div>
 
-        <!-- Step 2: Route Fixed -->
-        <div class="tutorial-card">
-          <div class="step-badge">2</div>
-          <div class="screenshot-frame">
-            <img src="./assets/routeFixed.jpg" alt="Route Locked" class="app-screenshot">
+        <!-- Step 2: Route Video -->
+        <div class="mission-step reverse">
+          <div class="step-text">
+            <div class="step-watermark">02</div>
+            <h3>ROUTE LOCKED</h3>
+            <p>Engage the tactical navigation system. Follow the dynamic green path lines to ensure optimal
+              house-to-house efficiency.</p>
           </div>
-          <h3>ROUTE LOCKED</h3>
-          <p>Follow the green tactical line for optimal delivery sequence.</p>
+          <div class="step-visual-container">
+            <div class="phone-3d-wrapper">
+              <div class="phone-notch"></div>
+              <video class="screen-content" autoplay loop muted playsinline>
+                <source src="./assets/routeFixedVideoLinesMoving.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
         </div>
 
         <!-- Step 3: Spin Wheel -->
-        <div class="tutorial-card">
-          <div class="step-badge">3</div>
-          <div class="screenshot-frame">
-            <img src="./assets/spinWheel.jpeg" alt="Spin Wheel" class="app-screenshot">
+        <div class="mission-step">
+          <div class="step-text">
+            <div class="step-watermark">03</div>
+            <h3>GIFT SPIN</h3>
+            <p>Uncertain about the payload? Trigger the randomization engine to auto-select the perfect gift for the
+              current target.</p>
           </div>
-          <h3>GIFT SPIN</h3>
-          <p>Engage the randomization engine to select the perfect gift.</p>
+          <div class="step-visual-container">
+            <div class="phone-3d-wrapper">
+              <div class="phone-notch"></div>
+              <img src="./assets/spinWheel.jpeg" alt="Spin Wheel" class="screen-content">
+            </div>
+          </div>
         </div>
 
         <!-- Step 4: Inventory -->
-        <div class="tutorial-card">
-          <div class="step-badge">4</div>
-          <div class="screenshot-frame">
-            <img src="./assets/giftInventory.jpeg" alt="Inventory" class="app-screenshot">
+        <div class="mission-step reverse">
+          <div class="step-text">
+            <div class="step-watermark">04</div>
+            <h3>INVENTORY</h3>
+            <p>Monitor your sleigh's cargo hold in real-time. Ensure you have enough Legos and consoles before entering
+              a sector.</p>
           </div>
-          <h3>INVENTORY</h3>
-          <p>Manage cargo limits and track sleigh capacity in real-time.</p>
+          <div class="step-visual-container">
+            <div class="phone-3d-wrapper">
+              <div class="phone-notch"></div>
+              <img src="./assets/giftInventory.jpeg" alt="Inventory" class="screen-content">
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
   </div>
