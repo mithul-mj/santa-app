@@ -47,6 +47,8 @@ const wheelModal = document.getElementById('wheel-modal');
 const wheelEl = document.getElementById('wheel');
 const spinBtn = document.getElementById('spin-btn');
 const spinResult = document.getElementById('spin-result');
+const closeWheelBtn = document.getElementById('close-wheel');
+if (closeWheelBtn) closeWheelBtn.addEventListener('click', () => wheelModal.classList.add('hidden-modal'));
 
 /* --- State --- */
 let candidateFeatures = [];
