@@ -1,59 +1,73 @@
 # 🎅 Santa Terrace Navigator
 
-**Mission Objective:** A tactical, high-tech gift delivery system designed for Santa's modern operations. Utilizing satellite imagery and LIDAR data, this application identifies optimal landing zones (flat concrete terraces) and generates efficient flight paths for package delivery.
+> **A tactical gift-delivery system for the modern age.**
 
-![App Screenshot](./assets/flightPath.jpeg)
+This application assists Santa's operations team in identifying flat concrete terraces in urban environments, generating optimal flight paths, and managing gift inventory in real-time. Built with a "Cyberpunk/Tactical" aesthetic, it turns gift delivery into a precision mission.
 
-## 🚀 Features
+---
 
-*   **📡 LIDAR Sector Scan**: Scans the current map area for buildings suitable for sleigh landing (Flat roofs > 3 floors).
-*   **🎯 Path Locking**: Automatically generates a "Visiting Salesman" style route to minimize flight time between houses.
-*   **🎒 Cargo Management**: Inventory system to track gifts (Lego Sets, PS5s, Teddy Bears).
-*   **🎡 Gift Randomizer**: A physics-based spin wheel to decide which gift to deliver to uncertain targets.
-*   **🧭 Tactical HUD**: Compass, weather data (Open-Meteo), and distance tracking.
-*   **📱 3D Mobile Experience**: Fully responsive landing page with 3D interactions.
+## 📸 Screenshots
+
+| **LIDAR Scan Sector** | **Flight Path Locked** |
+|:---:|:---:|
+| <img src="./assets/flightPath.jpeg" width="300" /> | <img src="./assets/routeFixed.jpg" width="300" /> |
+| *Identify targets via satellite* | *Optimized travel sequence* |
+
+| **Gift Randomizer** | **Cargo Inventory** |
+|:---:|:---:|
+| <img src="./assets/spinWheel.jpeg" width="300" /> | <img src="./assets/giftInventory.jpeg" width="300" /> |
+| *Physics-based decision engine* | *Real-time payload tracking* |
+
+---
+
+## ✨ Features
+
+*   **📡 Sector Scanning**: Utilizes the Overpass API to query OpenStreetMap data, filtering for buildings with >3 levels and flat roofs suitable for sleigh landing.
+*   **🎯 Tactical Routing**: Implements a nearest-neighbor algorithm to create an efficient delivery path between identified houses.
+*   **🎒 Inventory System**: Manage the sleigh's cargo (add/remove items).
+*   **🎡 Spin Wheel**: A specialized UI for random gift selection when the "Naughty/Nice" status is ambiguous.
+*   **📱 3D Responsive Design**: A premium landing page experience featuring 3D-slanted mobile mockups and glassmorphism UI.
+*   **🧭 Navigation Tools**: Live compass, weather integration, and location search.
 
 ## 🛠️ Tech Stack
 
-*   **Core**: Vanilla JavaScript (ES Module structure).
-*   **Maps**: [Leaflet.js](https://leafletjs.com/) with CartoCDN Dark Matter tiles.
-*   **Data APIs**:
-    *   [Overpass API](https://overpass-api.de/) (OpenStreetMap data for building footprints).
-    *   [Open-Meteo](https://open-meteo.com/) (Real-time weather).
-    *   [Nominatim](https://nominatim.org/) (Location search).
-*   **Build Tool**: [Vite](https://vitejs.dev/).
-*   **Styling**: Native CSS3 with Glassmorphism and 3D Transforms.
+*   **Frontend**: Vanilla JavaScript (ES Modules).
+*   **Styling**: CSS3 (Variables, Grid, Flexbox, 3D Transforms).
+*   **Build Tool**: Vite.
+*   **Mapping Engine**: Leaflet.js with CartoCDN Dark Mode tiles.
+*   **APIs**:
+    *   **Overpass API**: Building data.
+    *   **Nominatim**: Geocoding/Search.
+    *   **Open-Meteo**: Weather data.
 
-## 📦 Installation
+## ⚙️ Setup Instructions
 
-1.  Clone the repository:
+To run this project locally on your machine:
+
+1.  **Clone the repository**:
     ```bash
     git clone https://github.com/mithul-mj/santa-app.git
     cd santa-app
     ```
 
-2.  Install dependencies:
+2.  **Install dependencies**:
     ```bash
     npm install
     ```
 
-3.  Initialize Mission Control (Run Locally):
+3.  **Start the development server**:
     ```bash
     npm run dev
     ```
 
-4.  Deploy:
+4.  **Build for production**:
     ```bash
     npm run build
     ```
 
-## 🎮 How to Play
+## 🚀 Live Demo
 
-1.  **Initialize System**: Click the button on the landing page.
-2.  **Scan**: Click "SCAN SECTOR" to find houses in Bengaluru (or search for a new city).
-3.  **Route**: Click a blue building to start a route. A green line will connect targets.
-4.  **Deliver**: Click "Give Gift" on each house marker.
-5.  **Spin**: If you are undecided, spin the wheel to pick a gift!
+[View the Project](https://santa-app.vercel.app) *(Replace with your actual Vercel link)*
 
 ---
-*Built for the North Pole Engineering Team (NPET).*
+*Created by Mithul MJ*
