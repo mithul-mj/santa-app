@@ -843,12 +843,22 @@ html {
   color: var(--accent-blue);
 }
 
+/* Fix mobile click overlap */
+.hero-text {
+  position: relative;
+  z-index: 20;
+  pointer-events: auto;
+}
+
 .hero-visual {
   height: 600px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+  /* Prevent globe from blocking button clicks */
+  z-index: 10;
 }
 
 .globe-sphere {
