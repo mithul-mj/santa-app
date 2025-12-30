@@ -1145,8 +1145,9 @@ html {
   .top-bar {
     align-items: flex-start;
     /* Align to top */
-    padding: 0 10px;
-    /* Horizontal padding only */
+    padding-left: 10px;
+    padding-right: 2px;
+    /* Push buttons to very edge */
     height: auto;
     /* Allow growth */
   }
