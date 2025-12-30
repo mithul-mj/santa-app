@@ -470,8 +470,8 @@ const handleOrientation = (event) => {
   if (event.webkitCompassHeading) {
     heading = event.webkitCompassHeading;
   } else if (event.alpha !== null) {
-    // Android: Use alpha directly (Inverting logic based on user feedback)
-    heading = event.alpha;
+    // Android: alpha is CCW from North. Convert to CW.
+    heading = 360 - event.alpha;
   }
 
   // 2. Compensate for Screen Orientation
