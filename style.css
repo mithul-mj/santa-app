@@ -214,6 +214,15 @@ html {
   display: flex;
   align-items: center;
   gap: 10px;
+  touch-action: manipulation;
+  /* Improve tap speed */
+}
+
+.scan-btn:active {
+  transform: scale(0.95);
+  background: white;
+  color: var(--accent-blue);
+  box-shadow: 0 5px 20px rgba(0, 132, 176, 0.8);
 }
 
 .scan-btn:hover {
@@ -979,21 +988,30 @@ html {
 .icon-btn,
 #search-toggle,
 #inventory-toggle {
-  width: 44px;
-  height: 44px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  touch-action: manipulation;
+  /* Faster touch response */
+}
+
+.icon-btn:active,
+#search-toggle:active,
+#inventory-toggle:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.25) !important;
 }
 
 .weather-widget {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
+  height: 54px;
   padding: 0 16px;
   border-radius: 50px;
   font-weight: 600;
