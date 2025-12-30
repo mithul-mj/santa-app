@@ -1145,11 +1145,15 @@ html {
   .top-bar {
     align-items: flex-start;
     /* Align to top */
-    padding-left: 10px;
-    padding-right: 2px;
-    /* Push buttons to very edge */
+    padding: 0;
+    /* Zero padding for pure edge alignment */
     height: auto;
     /* Allow growth */
+  }
+
+  .app-brand {
+    margin-left: 12px;
+    margin-top: 10px;
   }
 
   .brand-logo {
