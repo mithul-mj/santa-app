@@ -1036,22 +1036,51 @@ html {
 
   .top-bar {
     align-items: center;
+    padding: 10px;
+    /* Reduce padding */
   }
 
-  .brand-text h1 {
-    font-size: 0.9rem;
-  }
-
-  .brand-text p {
-    display: none;
+  .brand-text {
+    display: none !important;
+    /* Hide brand text fully on mobile */
   }
 
   .brand-logo {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
 
   .right-cluster {
-    gap: 5px;
+    gap: 4px;
+    /* Tighten gap */
+    flex: 1;
+    /* Allow to expand */
+    justify-content: flex-end;
+  }
+
+  .icon-btn,
+  #search-toggle,
+  #inventory-toggle {
+    width: 32px;
+    /* Smaller buttons */
+    height: 32px;
+    /* Smaller buttons */
+    font-size: 0.9rem;
+  }
+
+  .weather-widget {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    /* Smaller text */
+    white-space: nowrap;
+  }
+
+  /* Fix Search Modal on Mobile */
+  .search-modal {
+    top: 60px;
+    width: 94%;
+    left: 3%;
+    z-index: 9999;
+    /* Ensure on top */
   }
 }
 
