@@ -50,6 +50,9 @@ const spinResult = document.getElementById('spin-result');
 const closeWheelBtn = document.getElementById('close-wheel');
 if (closeWheelBtn) closeWheelBtn.addEventListener('click', () => wheelModal.classList.add('hidden-modal'));
 
+const distanceHud = document.getElementById('distance-hud');
+const hudValue = document.getElementById('hud-value');
+
 /* --- State --- */
 let candidateFeatures = [];
 let activeRoute = [];
@@ -433,11 +436,23 @@ window.toggleDelivery = function (index) {
 
 function updateDistanceStatus() {
   const nextIdx = activeRoute.findIndex(n => !n.delivered);
-  if (nextIdx === -1) { showStatus("MISSION COMPLETE. all packages delivered."); if (compassContainer) compassContainer.style.transform = `translate(-50%, -50%) rotate(0deg)`; return; }
+  if (nextIdx === -1) {
+    showStatus("MISSION COMPLETE. all packages delivered.");
+    if (compassContainer) compassContainer.style.transform = `translate(-50%, -50%) rotate(0deg)`;
+    if (distanceHud) distanceHud.classList.add('hidden');
+    return;
+  }
   const target = activeRoute[nextIdx];
   let fromLoc = (nextIdx === 0) ? map.getCenter() : activeRoute[nextIdx - 1].centroid;
   const dist = fromLoc.distanceTo(target.centroid).toFixed(0);
-  showStatus(`NEXT: House #${nextIdx + 1} — RANGE: ${dist}m`);
+
+  // Update Persistent HUD
+  if (distanceHud && hudValue) {
+    distanceHud.classList.remove('hidden');
+    hudValue.textContent = `${dist}m`;
+  } else {
+    showStatus(`NEXT: House #${nextIdx + 1} — RANGE: ${dist}m`);
+  }
 }
 
 function updateSidebar() {
