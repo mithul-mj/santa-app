@@ -1159,17 +1159,15 @@ html {
   .right-cluster {
     flex-direction: column;
     gap: 32px;
-    /* Maximum Separation */
     flex-shrink: 0;
-    align-items: center;
+    align-items: flex-end;
+    /* Align right to show full weather pill */
     margin-top: 8px;
-    /* Extra top margin */
     pointer-events: auto;
   }
 
-  /* Compact Mobile Buttons */
+  /* Compact Mobile Buttons (Weather Excluded) */
   .icon-btn,
-  #weather-widget,
   #search-toggle,
   #inventory-toggle,
   #locate-btn,
@@ -1180,14 +1178,10 @@ html {
     min-width: 42px !important;
   }
 
-  /* Hide Weather Text, Show Icon Only */
-  #weather-widget #temp-value {
-    display: none;
-  }
-
   #weather-widget {
-    padding: 0 !important;
-    width: 42px !important;
+    padding: 0 12px !important;
+    width: auto !important;
+    min-width: 42px !important;
   }
 
 
