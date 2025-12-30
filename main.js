@@ -460,38 +460,69 @@ function updateSidebar() {
 }
 
 // Robust Compass Rotation
+// Physics-based Smoothing (Google Maps Feel)
+let targetHeading = 0;
+let currentHeading = 0;
+let isCompassActive = false;
+
 const handleOrientation = (event) => {
-  // Priority: GPS Heading (if moving) > Compass
-  if (window.gpsHeading !== null) return;
+  // GPS Priority Check
+  if (window.gpsHeading !== null) {
+    targetHeading = window.gpsHeading;
+    isCompassActive = true;
+    return;
+  }
 
   let heading = 0;
-
   // 1. Base Heading (CW from North)
   if (event.webkitCompassHeading) {
     heading = event.webkitCompassHeading;
   } else if (event.alpha !== null) {
-    // Android: alpha is CCW from North. Convert to CW.
+    // Android Standard
     heading = 360 - event.alpha;
   }
 
   // 2. Compensate for Screen Orientation
-  // If holding landscape, "Top" of phone is rotated.
   if (screen.orientation && screen.orientation.angle) {
     heading += screen.orientation.angle;
   } else if (typeof window.orientation !== "undefined") {
     heading += window.orientation;
   }
 
-  // 3. Rotate Compass Ring (Opposite to Heading)
-  // Example: Heading 90 (East) -> Rotate -90 (Left) -> N points North.
-  if (compassContainer) {
-    compassContainer.style.transform = `translate(-50%, -50%) rotate(${-heading}deg)`;
-  }
+  targetHeading = heading;
+  isCompassActive = true;
 };
 
-// Listen for absolute orientation (Android) or standard (iOS fallback)
+// Animation Loop for Smooth Rotation
+function animateCompass() {
+  requestAnimationFrame(animateCompass);
+  if (!isCompassActive || !compassContainer) return;
+
+  // Shortest Path Interpolation
+  let diff = targetHeading - currentHeading;
+  // Wrap differences to -180 to 180 range
+  while (diff < -180) diff += 360;
+  while (diff > 180) diff -= 360;
+
+  // Smoothing Factor (0.1 = Heavy/Smooth, 0.2 = Responsive)
+  if (Math.abs(diff) > 0.1) {
+    currentHeading += diff * 0.15;
+  } else {
+    currentHeading = targetHeading;
+  }
+
+  // Apply Rotation
+  compassContainer.style.transform = `translate(-50%, -50%) rotate(${-currentHeading}deg)`;
+}
+animateCompass(); // Start Loop
+
+// Listeners
 if ('ondeviceorientationabsolute' in window) {
   window.addEventListener('deviceorientationabsolute', handleOrientation, true);
 } else if (window.DeviceOrientationEvent) {
   window.addEventListener('deviceorientation', handleOrientation, true);
 }
+// Listen for screen rotation specifically
+window.addEventListener('orientationchange', () => {
+  // handled in loop
+});
