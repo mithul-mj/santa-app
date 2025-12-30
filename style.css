@@ -1136,9 +1136,11 @@ html {
   }
 
   .top-bar {
-    align-items: center;
+    align-items: flex-start;
+    /* Align to top */
     padding: 10px;
-    /* Reduce padding */
+    height: auto;
+    /* Allow growth */
   }
 
   .brand-text {
@@ -1150,11 +1152,14 @@ html {
     font-size: 1.5rem;
   }
 
+  /* Vertical Stack on Right */
   .right-cluster {
-    gap: 6px;
-    /* Tighter gap */
+    flex-direction: column;
+    gap: 12px;
     flex-shrink: 0;
-    justify-content: flex-end;
+    align-items: center;
+    margin-top: 4px;
+    pointer-events: auto;
   }
 
   /* Compact Mobile Buttons */
