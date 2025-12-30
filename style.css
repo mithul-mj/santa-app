@@ -1125,4 +1125,36 @@ html {
     left: 5%;
     top: 70px;
   }
+
+  /* Tutorial Mobile Overrides for 3D */
+  .mission-step,
+  .mission-step.reverse {
+    flex-direction: column;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .step-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .step-watermark {
+    left: 50%;
+    transform: translateX(-50%);
+    top: -50px;
+    font-size: 8rem;
+  }
+
+  .phone-3d-wrapper {
+    width: 260px;
+    height: 520px;
+    /* Maintain 3D slant! */
+    transform: rotateY(-15deg) rotateX(5deg) scale(0.9);
+  }
+
+  .mission-step.reverse .phone-3d-wrapper {
+    transform: rotateY(15deg) rotateX(5deg) scale(0.9);
+  }
 }
