@@ -456,17 +456,30 @@ function updateSidebar() {
   });
 }
 
-// Mobile Compass Rotation
-if (window.DeviceOrientationEvent && compassContainer) {
-  window.addEventListener("deviceorientation", (event) => {
-    let alpha = event.alpha;
-    // iOS support
-    if (event.webkitCompassHeading) {
-      alpha = event.webkitCompassHeading;
+// Robust Compass Rotation
+const handleOrientation = (event) => {
+  let heading = 0;
+
+  // iOS (WebKit): heading is CW from North
+  if (event.webkitCompassHeading) {
+    heading = event.webkitCompassHeading;
+  }
+  // Android / Standard: alpha is CCW from North
+  else if (event.alpha !== null) {
+    if (event.absolute || event.alpha !== 0) {
+      heading = 360 - event.alpha;
     }
-    if (alpha !== null) {
-      // Rotate Compass Ring (Counter-rotate alpha)
-      compassContainer.style.transform = `translate(-50%, -50%) rotate(${-alpha}deg)`;
-    }
-  }, true);
+  }
+
+  // Apply rotation if we have a valid heading
+  if (heading && compassContainer) {
+    compassContainer.style.transform = `translate(-50%, -50%) rotate(${-heading}deg)`;
+  }
+};
+
+// Listen for absolute orientation (Android) or standard (iOS fallback)
+if ('ondeviceorientationabsolute' in window) {
+  window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+} else if (window.DeviceOrientationEvent) {
+  window.addEventListener('deviceorientation', handleOrientation, true);
 }
