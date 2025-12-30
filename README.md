@@ -67,7 +67,17 @@ To run this project locally on your machine:
 
 ## 🚀 Live Demo
 
-[View the Project](https://santa-app.vercel.app) *(Replace with your actual Vercel link)*
+**[Launch Mission Control](https://santa-app-sable.vercel.app/)**
 
 ---
+
+## 🎥 Video Reconnaissance
+
+<video src="./assets/routeFixedVideoLinesMoving.mp4" controls="controls" muted="muted" style="max-width: 100%; border-radius: 10px;"></video>
+
+*Tactical Route Visualization*
+
+---
+
+## 📸 Screenshots
 *Created by Mithul MJ*
