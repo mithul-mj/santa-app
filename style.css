@@ -863,122 +863,21 @@ html {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform-style: preserve-3d;
-  border: 1px dashed rgba(255, 255, 255, 0.15);
+  transform: translate(-50%, -50%) rotateX(60deg);
+  width: 550px;
+  height: 550px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(118, 224, 248, 0.05);
+  animation: spin-slow 20s linear infinite;
 }
 
-.ring-1 {
-  width: 550px;
-  height: 550px;
-  animation: spin-orbit-1 20s linear infinite;
-}
-
-.ring-2 {
-  width: 480px;
-  height: 480px;
-  border-color: rgba(118, 224, 248, 0.2);
-  border-style: solid;
-  border-width: 1px;
-  animation: spin-orbit-2 25s linear infinite reverse;
-}
-
-.ring-3 {
-  width: 600px;
-  height: 600px;
-  border-color: rgba(255, 51, 102, 0.15);
-  animation: spin-orbit-3 30s linear infinite;
-}
-
-@keyframes spin-orbit-1 {
+@keyframes spin-slow {
   from {
-    transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg);
+    transform: translate(-50%, -50%) rotateX(60deg) rotate(0deg);
   }
 
   to {
-    transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg);
-  }
-}
-
-@keyframes spin-orbit-2 {
-  from {
-    transform: translate(-50%, -50%) rotateX(-45deg) rotateY(10deg) rotateZ(0deg);
-  }
-
-  to {
-    transform: translate(-50%, -50%) rotateX(-45deg) rotateY(10deg) rotateZ(360deg);
-  }
-}
-
-@keyframes spin-orbit-3 {
-  from {
-    transform: translate(-50%, -50%) rotateY(80deg) rotateZ(0deg);
-  }
-
-  to {
-    transform: translate(-50%, -50%) rotateY(80deg) rotateZ(360deg);
-  }
-}
-
-/* Santa Animation */
-.santa-orbit-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 550px;
-  height: 550px;
-  transform: translate(-50%, -50%) rotateX(70deg);
-  /* Flat orbit */
-  transform-style: preserve-3d;
-  animation: santa-revolution 12s linear infinite;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.santa-sleigh {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2.5rem;
-  filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.8));
-  animation: santa-counter-rotate 12s linear infinite;
-}
-
-@keyframes santa-revolution {
-  0% {
-    transform: translate(-50%, -50%) rotateX(70deg) rotateZ(0deg);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) rotateX(70deg) rotateZ(360deg);
-  }
-}
-
-@keyframes santa-counter-rotate {
-
-  /* Keep Santa upright relative to screen, not orbit */
-  0% {
-    transform: translate(-50%, -50%) rotateZ(0deg) rotateX(-70deg);
-  }
-
-  25% {
-    transform: translate(-50%, -50%) rotateZ(-90deg) rotateX(-70deg) scale(1.2);
-  }
-
-  /* Closer */
-  50% {
-    transform: translate(-50%, -50%) rotateZ(-180deg) rotateX(-70deg);
-  }
-
-  75% {
-    transform: translate(-50%, -50%) rotateZ(-270deg) rotateX(-70deg) scale(0.8);
-  }
-
-  /* Farther */
-  100% {
-    transform: translate(-50%, -50%) rotateZ(-360deg) rotateX(-70deg);
+    transform: translate(-50%, -50%) rotateX(60deg) rotate(360deg);
   }
 }
 
