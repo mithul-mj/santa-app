@@ -1151,11 +1151,33 @@ html {
   }
 
   .right-cluster {
-    gap: 12px;
+    gap: 6px;
+    /* Tighter gap */
     flex-shrink: 0;
-    /* Ensure buttons don't collapse */
-    /* Allow to expand */
     justify-content: flex-end;
+  }
+
+  /* Compact Mobile Buttons */
+  .icon-btn,
+  #weather-widget,
+  #search-toggle,
+  #inventory-toggle,
+  #locate-btn,
+  #sidebar-toggle,
+  #mute-toggle {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+  }
+
+  /* Hide Weather Text, Show Icon Only */
+  #weather-widget #temp-value {
+    display: none;
+  }
+
+  #weather-widget {
+    padding: 0 !important;
+    width: 42px !important;
   }
 
 
