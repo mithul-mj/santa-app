@@ -1163,7 +1163,8 @@ html {
   /* Vertical Stack on Right */
   .right-cluster {
     flex-direction: column;
-    gap: 12px;
+    gap: 20px;
+    /* Increased spacing */
     flex-shrink: 0;
     align-items: center;
     margin-top: 4px;
