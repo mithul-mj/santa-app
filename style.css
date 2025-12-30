@@ -1151,11 +1151,6 @@ html {
     /* Allow growth */
   }
 
-  .brand-text {
-    display: none !important;
-    /* Hide brand text fully on mobile */
-  }
-
   .brand-logo {
     font-size: 1.5rem;
   }
