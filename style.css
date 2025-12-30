@@ -1146,7 +1146,7 @@ html {
   }
 
   .right-cluster {
-    gap: 4px;
+    gap: 12px;
     /* Tighten gap */
     flex: 1;
     /* Allow to expand */

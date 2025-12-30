@@ -239,16 +239,31 @@ function finalizeDelivery(index, giftName) {
       showStatus(`DELIVERED! ${msg}`);
 
       // Voice Announcement
-      if ('speechSynthesis' in window) {
-        const u = new SpeechSynthesisUtterance(msg);
-        u.rate = 1.1;
-        window.speechSynthesis.speak(u);
-      }
+      speak(msg);
     } else {
       showStatus("Mission Complete! Return to base.");
-      if ('speechSynthesis' in window) window.speechSynthesis.speak(new SpeechSynthesisUtterance("Mission Complete"));
+      speak("Mission Complete");
     }
   }, 1000);
+}
+
+// Check for Mute
+const muteToggle = document.getElementById('mute-toggle');
+let isMuted = false;
+if (muteToggle) {
+  muteToggle.addEventListener('click', () => {
+    isMuted = !isMuted;
+    muteToggle.textContent = isMuted ? '🔇' : '🔊';
+    showStatus(isMuted ? "Voice Navigation Muted" : "Voice Navigation Active");
+  });
+}
+
+function speak(text) {
+  if (isMuted || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel(); // Stop current speech
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.1;
+  window.speechSynthesis.speak(u);
 }
 
 /* --- Sidebar Toggle Logic --- */
