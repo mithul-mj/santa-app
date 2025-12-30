@@ -230,16 +230,8 @@ if (sidebarToggle) {
 }
 closeSidebarBtn.addEventListener('click', () => routeSidebar.classList.add('hidden-sidebar'));
 
-/* --- Compass Logic (Instant) --- */
-if (window.DeviceOrientationEvent) {
-  const eventName = 'ondeviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation';
-  window.addEventListener(eventName, (event) => {
-    let rotation = 0;
-    if (event.webkitCompassHeading) rotation = -event.webkitCompassHeading;
-    else if (event.alpha !== null) rotation = event.alpha;
-    if (compassContainer) compassContainer.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-  });
-}
+/* --- GPS Heading State --- */
+window.gpsHeading = null;
 
 /* --- Locate Me Logic --- */
 if (locateBtn) {
@@ -258,9 +250,20 @@ if (locateBtn) {
 
 map.on('locationfound', (e) => {
   const radius = e.accuracy;
+
+  // GPS Heading Fusion (Google Maps Style)
+  // If moving (>0.5m/s) and we have a heading, use it over the compass.
+  if (e.speed > 0.5 && e.heading !== null && !isNaN(e.heading)) {
+    window.gpsHeading = e.heading;
+    if (compassContainer) compassContainer.style.transform = `translate(-50%, -50%) rotate(${-e.heading}deg)`;
+    // Optional: Rotate a user marker arrow here
+  } else {
+    window.gpsHeading = null; // Revert to Magnetometer when stopped
+  }
+
   L.circle(e.latlng, radius, { color: '#0084B0', fillOpacity: 0.1, weight: 1 }).addTo(currentLayerGroup);
   L.circleMarker(e.latlng, { radius: 6, color: 'white', fillColor: '#0084B0', fillOpacity: 1 }).addTo(currentLayerGroup);
-  showStatus(`Position Corrected. Acc: ${radius.toFixed(0)}m`);
+  showStatus(`Pos Fixed. Acc: ${radius.toFixed(0)}m`);
   updateWeather();
 });
 map.on('locationerror', (e) => showStatus(`GPS Error: ${e.message}`, true));
@@ -458,6 +461,9 @@ function updateSidebar() {
 
 // Robust Compass Rotation
 const handleOrientation = (event) => {
+  // Priority: GPS Heading (if moving) > Compass
+  if (window.gpsHeading !== null) return;
+
   let heading = 0;
 
   // 1. Base Heading (CW from North)
