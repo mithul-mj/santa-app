@@ -460,19 +460,25 @@ function updateSidebar() {
 const handleOrientation = (event) => {
   let heading = 0;
 
-  // iOS (WebKit): heading is CW from North
+  // 1. Base Heading (CW from North)
   if (event.webkitCompassHeading) {
     heading = event.webkitCompassHeading;
-  }
-  // Android / Standard: alpha is CCW from North
-  else if (event.alpha !== null) {
-    if (event.absolute || event.alpha !== 0) {
-      heading = 360 - event.alpha;
-    }
+  } else if (event.alpha !== null) {
+    // Android: alpha is CCW from North. Convert to CW.
+    heading = 360 - event.alpha;
   }
 
-  // Apply rotation if we have a valid heading
-  if (heading && compassContainer) {
+  // 2. Compensate for Screen Orientation
+  // If holding landscape, "Top" of phone is rotated.
+  if (screen.orientation && screen.orientation.angle) {
+    heading += screen.orientation.angle;
+  } else if (typeof window.orientation !== "undefined") {
+    heading += window.orientation;
+  }
+
+  // 3. Rotate Compass Ring (Opposite to Heading)
+  // Example: Heading 90 (East) -> Rotate -90 (Left) -> N points North.
+  if (compassContainer) {
     compassContainer.style.transform = `translate(-50%, -50%) rotate(${-heading}deg)`;
   }
 };
