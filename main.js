@@ -225,26 +225,30 @@ function finalizeDelivery(index, giftName) {
   updateSidebar();
   updateDistanceStatus();
 
-  // Announce Next Destination
-  const nextIdx = activeRoute.findIndex(n => !n.delivered);
-  if (nextIdx !== -1) {
-    const target = activeRoute[nextIdx];
-    const distMeters = map.getCenter().distanceTo(target.centroid);
-    const distKm = (distMeters / 1000).toFixed(2);
+  updateDistanceStatus();
 
-    const msg = `${distKm} km to reach next destination`;
-    showStatus(`DELIVERED! ${msg}`);
+  // Announce Next Destination (Delayed 1s for visibility)
+  setTimeout(() => {
+    const nextIdx = activeRoute.findIndex(n => !n.delivered);
+    if (nextIdx !== -1) {
+      const target = activeRoute[nextIdx];
+      const distMeters = map.getCenter().distanceTo(target.centroid);
+      const distKm = (distMeters / 1000).toFixed(2);
 
-    // Voice Announcement
-    if ('speechSynthesis' in window) {
-      const u = new SpeechSynthesisUtterance(msg);
-      u.rate = 1.1;
-      window.speechSynthesis.speak(u);
+      const msg = `${distKm} km to reach next destination`;
+      showStatus(`DELIVERED! ${msg}`);
+
+      // Voice Announcement
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(msg);
+        u.rate = 1.1;
+        window.speechSynthesis.speak(u);
+      }
+    } else {
+      showStatus("Mission Complete! Return to base.");
+      if ('speechSynthesis' in window) window.speechSynthesis.speak(new SpeechSynthesisUtterance("Mission Complete"));
     }
-  } else {
-    showStatus("Mission Complete! Return to base.");
-    if ('speechSynthesis' in window) window.speechSynthesis.speak(new SpeechSynthesisUtterance("Mission Complete"));
-  }
+  }, 1000);
 }
 
 /* --- Sidebar Toggle Logic --- */
