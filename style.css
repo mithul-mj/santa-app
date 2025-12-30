@@ -1121,6 +1121,13 @@ html {
     pointer-events: none !important;
   }
 
+  .ui-overlay {
+    padding: 0 !important;
+    /* Remove outer frame */
+    padding-top: 10px !important;
+    /* Small status bar gap */
+  }
+
   .compass-container * {
     pointer-events: none !important;
   }
@@ -1138,7 +1145,8 @@ html {
   .top-bar {
     align-items: flex-start;
     /* Align to top */
-    padding: 10px;
+    padding: 0 10px;
+    /* Horizontal padding only */
     height: auto;
     /* Allow growth */
   }
