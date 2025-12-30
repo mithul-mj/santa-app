@@ -1184,16 +1184,8 @@ html {
   }
 
   #weather-widget {
-    flex-direction: row-reverse !important;
-    /* Put text on left, icon on right */
-    padding: 0 0 0 12px !important;
-    /* Text padding left */
-    width: auto !important;
-    min-width: 42px !important;
-    justify-content: flex-end;
-    /* Align content to right */
-    padding-right: 9px !important;
-    /* Match icon center with buttons */
+    display: none !important;
+    /* Hide climate on mobile */
   }
 
 
