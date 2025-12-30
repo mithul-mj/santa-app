@@ -1147,8 +1147,8 @@ html {
 
   .right-cluster {
     gap: 12px;
-    /* Tighten gap */
-    flex: 1;
+    flex-shrink: 0;
+    /* Ensure buttons don't collapse */
     /* Allow to expand */
     justify-content: flex-end;
   }
