@@ -778,11 +778,20 @@ html {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .landing-page {
+    /* Allow scrolling on overflow */
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
   .landing-content {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 1rem;
-    padding-top: 2rem;
+    padding-top: 4rem; /* More space at top */
+    padding-bottom: 4rem; /* Ensure button isn't stuck to bottom */
+    height: auto;
+    min-height: 100svh; /* Use svh for mobile browsers */
   }
 
   .hero-text {
@@ -790,14 +799,31 @@ html {
     order: 2;
   }
 
+  .landing-title {
+    font-size: 2.8rem; /* Smaller font on mobile */
+  }
+
   .hero-visual {
-    height: 350px;
+    height: 300px; /* Slightly smaller */
     order: 1;
+    margin-bottom: 0;
+  }
+
+  .globe-sphere {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .orbit-ring {
+    width: 350px;
+    height: 350px;
   }
 
   .landing-subtitle {
+    font-size: 1rem;
     margin: 0 auto 2rem auto;
   }
+
 
   .landing-title {
     font-size: 3rem;
