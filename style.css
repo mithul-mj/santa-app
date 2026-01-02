@@ -38,6 +38,9 @@ html {
 #map {
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
   background: #020408;
 }
@@ -50,13 +53,22 @@ html {
   transform: translate(-50%, -50%) rotate(0deg);
   width: 65vh;
   height: 65vh;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: 400;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   /* transition removed for JS physics smoothing */
+}
+
+/* Ensure no child elements block clicks */
+/* Ensure no child elements block clicks */
+.compass-container *,
+.compass-ring,
+.compass-ring::after,
+.compass-tick {
+  pointer-events: none !important;
 }
 
 .compass-ring {
@@ -154,6 +166,10 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  pointer-events: none;
+}
+
+.top-bar>* {
   pointer-events: auto;
 }
 
@@ -196,12 +212,16 @@ html {
 
 .bottom-control {
   align-self: center;
-  pointer-events: auto;
+  pointer-events: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
+}
+
+.bottom-control>* {
+  pointer-events: auto;
 }
 
 .scan-btn {
@@ -282,10 +302,12 @@ html {
   transition: transform 0.5s var(--easing);
   display: flex;
   flex-direction: column;
+  pointer-events: auto;
 }
 
 .route-sidebar.hidden-sidebar {
   transform: translateX(-110%);
+  pointer-events: none !important;
 }
 
 .sidebar-header {
@@ -666,6 +688,7 @@ html {
   letter-spacing: 2px;
   background: linear-gradient(to right, white, var(--text-muted));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

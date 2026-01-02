@@ -75,6 +75,12 @@ let pendingDeliveryIndex = null; // Track which house we are spinning for
 enterAppBtn.addEventListener('click', () => {
   landingPage.classList.add('fade-out');
   appContainer.classList.remove('hidden-app');
+
+  // Wait for transition (1s) then remove from flow to prevent click blocking
+  setTimeout(() => {
+    landingPage.style.display = 'none';
+  }, 1000);
+
   setTimeout(() => {
     map.invalidateSize();
     updateWeather();
@@ -365,8 +371,22 @@ scanBtn.addEventListener('click', async () => {
   setLoading(true);
   try {
     const center = map.getCenter();
-    const buildings = await fetchBuildings(center, SCAN_RADIUS);
-    renderBuildings(buildings);
+
+    // Calculate Radius representing 65vh (Compass Size) in meters
+    const vh = window.innerHeight;
+    const compassRadiusPx = (vh * 0.65) / 2;
+
+    // Convert pixel radius to meters at current zoom/latitude
+    // We get a point [radius] pixels away from center and measure distance
+    const centerPoint = map.latLngToContainerPoint(center);
+    const edgePoint = L.point(centerPoint.x + compassRadiusPx, centerPoint.y);
+    const edgeLatLng = map.containerPointToLatLng(edgePoint);
+    const radiusMeters = center.distanceTo(edgeLatLng); // Leaflet calculates geodesic distance
+
+    // Scan strictly within this radius
+    const buildings = await fetchBuildings(center, radiusMeters);
+
+    renderBuildings(buildings, center, radiusMeters);
     if (buildings.features.length === 0) showStatus('No targets found in sector.', true);
     else showStatus(`Scan complete. ${buildings.features.length} targets identified.`);
   } catch (err) { setLoading(false); showStatus(err.message, true); }
@@ -403,7 +423,7 @@ function osmtogeojson(data) {
   return { type: 'FeatureCollection', features };
 }
 
-function renderBuildings(geoJson) {
+function renderBuildings(geoJson, center, radius) {
   currentLayerGroup.clearLayers();
   candidateFeatures = []; activeRoute = []; isRouteActive = false;
   routeSidebar.classList.add('hidden-sidebar');
@@ -414,6 +434,10 @@ function renderBuildings(geoJson) {
     const lat = coords.reduce((sum, p) => sum + p[1], 0) / coords.length;
     const lng = coords.reduce((sum, p) => sum + p[0], 0) / coords.length;
     return { id: i, feature: f, centroid: L.latLng(lat, lng), visited: false };
+  }).filter(c => {
+    // Strict Visual Filter: Centroid must be inside the compass circle
+    if (!center || !radius) return true; // Fallback
+    return c.centroid.distanceTo(center) <= radius;
   });
 
   candidateFeatures.forEach(c => {
