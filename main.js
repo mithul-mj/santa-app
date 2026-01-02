@@ -370,6 +370,8 @@ async function handleSearch() {
 scanBtn.addEventListener('click', async () => {
   setLoading(true);
   try {
+    if (map.getZoom() < 16) throw new Error("Range too wide. Zoom in closer!");
+
     const center = map.getCenter();
 
     // Calculate Radius representing 65vh (Compass Size) in meters
@@ -381,14 +383,14 @@ scanBtn.addEventListener('click', async () => {
     const centerPoint = map.latLngToContainerPoint(center);
     const edgePoint = L.point(centerPoint.x + compassRadiusPx, centerPoint.y);
     const edgeLatLng = map.containerPointToLatLng(edgePoint);
-    const radiusMeters = center.distanceTo(edgeLatLng); // Leaflet calculates geodesic distance
+    const radiusMeters = Math.ceil(center.distanceTo(edgeLatLng)); // Round up to integer
 
     // Scan strictly within this radius
     const buildings = await fetchBuildings(center, radiusMeters);
 
-    renderBuildings(buildings, center, radiusMeters);
-    if (buildings.features.length === 0) showStatus('No targets found in sector.', true);
-    else showStatus(`Scan complete. ${buildings.features.length} targets identified.`);
+    const count = renderBuildings(buildings, center, radiusMeters);
+    if (count === 0) showStatus('No targets found in sector.', true);
+    else showStatus(`Scan complete. ${count} targets identified.`);
   } catch (err) { setLoading(false); showStatus(err.message, true); }
   finally { setLoading(false); }
 });
@@ -406,11 +408,53 @@ function showStatus(msg, isError = false) {
 }
 
 /* --- Utilities & Routing --- */
+const OVERPASS_SERVERS = [
+  'https://overpass-api.de/api/interpreter',
+  'https://overpass.kumi.systems/api/interpreter',
+  'https://maps.mail.ru/osm/tools/overpass/api/interpreter'
+];
+
 async function fetchBuildings(center, radius) {
-  const query = `[out:json][timeout:25];(way["building"](around:${radius},${center.lat},${center.lng});relation["building"](around:${radius},${center.lat},${center.lng}););out geom;`;
-  const res = await fetch('https://overpass-api.de/api/interpreter', { method: 'POST', body: query });
-  if (!res.ok) throw new Error('Scan failed. Try zooming in.');
-  return osmtogeojson(await res.json());
+  // Ensure radius is reasonable (min 10m)
+  const safeRadius = Math.max(10, radius);
+
+  // Query with increased timeout (45s) for better reliability
+  const query = `[out:json][timeout:45];(way["building"](around:${safeRadius},${center.lat},${center.lng});relation["building"](around:${safeRadius},${center.lat},${center.lng}););out geom;`;
+
+  let lastError = null;
+
+  for (const server of OVERPASS_SERVERS) {
+    try {
+      showStatus(`Scanning via ${new URL(server).hostname}...`);
+
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), 20000); // 20s network timeout per server
+
+      const res = await fetch(server, {
+        method: 'POST',
+        body: query,
+        signal: controller.signal
+      });
+
+      clearTimeout(id);
+
+      if (!res.ok) {
+        if (res.status === 429) throw new Error("Rate Limited");
+        throw new Error(`Status ${res.status}`);
+      }
+
+      const data = await res.json();
+      return osmtogeojson(data);
+
+    } catch (e) {
+      console.warn(`Failed ${server}:`, e.message);
+      lastError = e;
+      // Continue to next server
+    }
+  }
+
+  // If we get here, all servers failed
+  throw new Error("All scan servers busy. Move slightly or wait 30s.");
 }
 function osmtogeojson(data) {
   const features = [];
@@ -446,6 +490,8 @@ function renderBuildings(geoJson, center, radius) {
       onEachFeature: (f, l) => { l.on('click', () => handleCandidateClick(c)); l.bindTooltip("Start Route Here", { direction: 'top' }); }
     }).addTo(currentLayerGroup);
   });
+
+  return candidateFeatures.length;
 }
 
 function handleCandidateClick(startNode) {
