@@ -38,13 +38,7 @@
 
 **The Santa Terrace Navigator (STN)** is the digital transformation of Sleigh Ops. It upgrades the North Pole from "Visual Flight Rules" to a precision **HUD (Heads-Up Display)** environment.
 
-### ⚠️ Visual Capability Note
-> **Is it possible to make the phones slant in this README?**
-> Unfortunately, GitHub's Markdown does **not** support the advanced CSS 3D transforms (`rotateY`, `perspective`) required to render the live "slanted phone" effect directly in this file.
->
-> **However**, the live application **DOES** feature this exact effect on the Landing Page! Click the **Live Access** button above to experience the premium 3D animations in real-time.
 
----
 
 ## 📸 Reconnaissance Imagery
 
