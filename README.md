@@ -21,7 +21,7 @@
 
   <br />
 
-  <img src="./assets/landing.png" alt="Mission Preview" width="80%" style="border-radius: 10px; border: 2px solid #333;" />
+  <img src="./assets/landing.png" alt="Mission Preview" width="100%" style="border-radius: 10px; border: 2px solid #333;" />
 
   <br />
   <br />
@@ -37,6 +37,11 @@
 ## 🎁 Mission Brief
 
 **The Santa Terrace Navigator (STN)** is the digital transformation of Sleigh Ops. It upgrades the North Pole from "Visual Flight Rules" to a precision **HUD (Heads-Up Display)** environment.
+
+> *In this era, Santa doesn’t land openly anymore.*
+> *He scans safe rooftops.*
+> *Chooses flat terraces.*
+> *Delivers gifts quietly — without confrontation, without fear.*
 
 
 
@@ -63,9 +68,9 @@
 ### 1. 🛰️ LIDAR Sector Scan
 **Intelligence Gathering.**
 The STN links directly to the **Overpass API** satellite network. With a single click of the `SCAN SECTOR` button, the system:
-*   Queries OpenStreetMap data.
-*   Filters for **High-Altitude Terraces** (`levels > 3` + `flat roof`).
-*   Auto-hides hazardous landing zones.
+*   Queries OpenStreetMap data within a dynamic **65vh visual radius**.
+*   **Safety Lock**: Automatically prevents scanning at Zoom Levels < 16 to protect the onboard browser engine.
+*   **Redundancy**: Cycles through **3 Global Servers** (Germany, Russia, etc.) to ensure data acquisition even during high-traffic events.
 
 ### 2. 🎯 Flight Path Optimization
 **Route Lock.**
