@@ -21,7 +21,7 @@
 
   <br />
 
-  <img src="./assets/flightPath.jpeg" alt="Mission Preview" width="80%" style="border-radius: 10px; border: 2px solid #333;" />
+  <img src="./assets/landing.png" alt="Mission Preview" width="80%" style="border-radius: 10px; border: 2px solid #333;" />
 
   <br />
   <br />
